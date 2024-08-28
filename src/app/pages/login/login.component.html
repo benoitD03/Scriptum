@@ -1,3 +1,8 @@
-<div class="w-full h-screen bg-blue-200">
-  <app-login-card/>
+<div *ngIf="goToSignup; else goToLogin" class="w-full h-screen bg-blue-200">
+  <app-signup-card/>
 </div>
+<ng-template #goToLogin>
+  <div class="w-full h-screen bg-blue-200">
+    <app-login-card/>
+  </div>
+</ng-template>

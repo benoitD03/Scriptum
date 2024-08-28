@@ -24,6 +24,7 @@ export class LoginCardComponent {
       console.log('User signed in:', user);
       this.router.navigate(['/dashboard']);
     } catch (error) {
+      alert('Mot de passe ou email incorrect');
       console.error('Error signing in:', error);
     }
   }
@@ -38,16 +39,6 @@ export class LoginCardComponent {
     }
   }
 
-  // Inscription par email
-  // async signUp() {
-  //   try {
-  //     const user = await this.supabaseService.signUp(this.email, this.password);
-  //     console.log('User signed up:', user);
-  //   } catch (error) {
-  //     console.error('Error signing up:', error);
-  //   }
-  // }
-
   // Déconnexion
   // async signOut() {
   //   try {
@@ -57,4 +48,7 @@ export class LoginCardComponent {
   //     console.error('Error signing out:', error);
   //   }
   // }
+  redirectToLoginWithSignup() {
+    this.router.navigate(['/login'], { queryParams: { goToSignup: true } });
+  }
 }

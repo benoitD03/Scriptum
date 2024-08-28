@@ -14,6 +14,6 @@ export class AppComponent {
   title = 'Starter';
 constructor(private router: Router) { }
   isLoginPage(): boolean {
-    return this.router.url === '/login';
+    return this.router.url.startsWith('/login');
   }
 }
