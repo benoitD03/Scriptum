@@ -30,6 +30,7 @@ constructor(private supabaseService: SupabaseService, private router : Router, p
     }
   }
 
+  //Méthode pour rediriger vers la page de connexion
   redirectToLogin() {
     this.router.navigate(['/login']);
   }

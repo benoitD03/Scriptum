@@ -17,6 +17,7 @@ export class LoginCardComponent {
   constructor(private supabaseService: SupabaseService, private router : Router, public accountService : AccountService) {}
   email: string = '';
   password: string = '';
+
   // Connexion par email
   async signInWithEmail() {
     try {
@@ -39,15 +40,7 @@ export class LoginCardComponent {
     }
   }
 
-  // Déconnexion
-  // async signOut() {
-  //   try {
-  //     await this.supabaseService.signOut();
-  //     console.log('User signed out');
-  //   } catch (error) {
-  //     console.error('Error signing out:', error);
-  //   }
-  // }
+  //Méthode pour rediriger vers la page d'inscription
   redirectToLoginWithSignup() {
     this.router.navigate(['/login'], { queryParams: { goToSignup: true } });
   }
