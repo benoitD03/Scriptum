@@ -1,6 +1,10 @@
 <div class="w-full h-screen flex justify-center items-center">
   <div [class.h-screen]="accountService.isMobile()" [class.rounded-lg]="!accountService.isMobile()"
-       class="w-full max-w-sm p-4 bg-white border border-gray-200 shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+       class="w-full p-4 bg-white border border-gray-200 shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex justify-center items-center mb-10">
+      <img src="assets/logo.png" alt="logo" class="w-10 h-10 mr-1" />
+      <h1 class="text-xl font-bold dark:text-white">Scriptum</h1>
+    </div>
     <form class="space-y-6" action="#">
       <h5 class="text-xl font-medium text-gray-900 dark:text-white py-2 text-center">Inscription</h5>
       <div>
