@@ -3,13 +3,15 @@ import { CommonModule} from "@angular/common";
 import {GoogleBooksApiService} from "../../services/google-books-api.service";
 import {FormsModule} from "@angular/forms";
 import {debounceTime, distinctUntilChanged, Subject, switchMap} from "rxjs";
+import {BookSearchedComponent} from "../../components/book-searched/book-searched.component";
 
 @Component({
   selector: 'app-search',
   standalone: true,
   imports: [
     FormsModule,
-    CommonModule
+    CommonModule,
+    BookSearchedComponent
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
@@ -18,8 +20,9 @@ export class SearchComponent implements OnInit {
 
   suggestions: any[] = [];
   searchQuery: string = "";
-
+  selectedBook: any = null;
   private searchSubject = new Subject<string>();
+
   constructor(private bookService: GoogleBooksApiService) {
   }
 
@@ -50,7 +53,8 @@ export class SearchComponent implements OnInit {
    * Méthode qui se déclenche lorsque l'utilisateur sélectionne un livre
    */
   selectBook(book: any) {
-    console.log(book.volumeInfo.title);
+    this.selectedBook = book;
   }
+
 }
 
