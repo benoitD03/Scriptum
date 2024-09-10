@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {SupabaseService} from "../../services/supabase.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -7,6 +8,14 @@ import { Component } from '@angular/core';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+
+  constructor(private supabaseService: SupabaseService) { }
+
+  ngOnInit(): void {
+    this.supabaseService.getCurrentUser().then(user => {
+      console.log(user.data.user?.email);
+    });
+  }
 
 }

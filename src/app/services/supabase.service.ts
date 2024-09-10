@@ -41,4 +41,9 @@ export class SupabaseService {
     const { error } = await this.supabase.auth.signOut();
     if (error) throw error;
   }
+
+  // Méthode pour récupérer l'utilisateur connecté
+  getCurrentUser() {
+    return this.supabase.auth.getUser();
+  }
 }
