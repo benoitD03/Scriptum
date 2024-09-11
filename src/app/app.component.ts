@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {LoginComponent} from "./pages/login/login.component";
 import {NgIf} from "@angular/common";
+import {SupabaseService} from "./services/supabase.service";
 
 @Component({
   selector: 'app-root',
@@ -12,20 +13,17 @@ import {NgIf} from "@angular/common";
 })
 export class AppComponent {
   title = 'Starter';
-constructor(private router: Router) { }
+constructor(private router: Router, private supabaseService : SupabaseService) { }
 
   //Méthode pour détecter si on est sur la page de connexion / inscription
   isLoginPage(): boolean {
     return this.router.url.startsWith('/login');
   }
 
-  // Déconnexion
-  // async signOut() {
-  //   try {
-  //     await this.supabaseService.signOut();
-  //     console.log('User signed out');
-  //   } catch (error) {
-  //     console.error('Error signing out:', error);
-  //   }
-  // }
+  //Déconnexion
+  async signOut() {
+    await this.supabaseService.signOut();
+    await this.router.navigate(['/login']);
+  }
+
 }
