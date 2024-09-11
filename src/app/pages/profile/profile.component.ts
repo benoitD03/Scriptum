@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {SupabaseService} from "../../services/supabase.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -9,4 +11,11 @@ import { Component } from '@angular/core';
 })
 export class ProfileComponent {
 
+  constructor(private supabaseService: SupabaseService, private router : Router) { }
+
+
+  async signOut() {
+    await this.supabaseService.signOut();
+    this.router.navigate(['/login']);
+  }
 }
