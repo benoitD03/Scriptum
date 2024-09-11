@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import {environment} from "../../environments/environment";
+import {Book} from "../class/book";
 
 @Injectable({
   providedIn: 'root',
@@ -45,5 +46,33 @@ export class SupabaseService {
   // Méthode pour récupérer l'utilisateur connecté
   getCurrentUser() {
     return this.supabase.auth.getUser();
+  }
+
+  //Méthode pour créer un nouveau livre (lié à l'utilisateur connecté)
+  async createBook(book: Book) {
+    // On récupère l'utilisateur actuellement connecté et ajouter son ID à l'objet book
+     this.getCurrentUser().then(async user => {
+       const userId = user.data.user?.id;
+       if (userId) {
+         const newBook = {
+           ...book,
+           id_user: userId,
+         };
+         // Si l'utilisateur est connecté, on insère le livre dans la base de données
+         const {data, error} = await this.supabase
+           .from('books')
+           .insert([newBook]);
+
+         if (error) {
+           console.error('Erreur lors de la création du livre:', error.message);
+         } else {
+           console.log('Livre créé avec succès:', data);
+         }
+       } else {
+         console.error('Utilisateur non connecté');
+       }
+
+     });
+
   }
 }
