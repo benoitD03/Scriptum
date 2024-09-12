@@ -13,9 +13,6 @@ export class DashboardComponent implements OnInit {
   constructor(private supabaseService: SupabaseService) { }
 
   ngOnInit(): void {
-    this.supabaseService.getCurrentUser().then(user => {
-      console.log(user.data.user?.email);
-    });
   }
 
 }
