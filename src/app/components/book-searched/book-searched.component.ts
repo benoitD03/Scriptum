@@ -14,6 +14,7 @@ import {SupabaseService} from "../../services/supabase.service";
 })
 export class BookSearchedComponent {
   @Input() book: any;
+  displayToast: boolean = false;
 
   constructor(private supabaseService: SupabaseService) {
   }
@@ -38,5 +39,14 @@ export class BookSearchedComponent {
       finished: false
     };
     await this.supabaseService.createBook(newBook);
+    this.displayToast = true;
+    this.closeModal();
+  }
+
+  /**
+   * Méthode pour fermer la confirmation
+   */
+  closeToast() {
+    this.displayToast = false;
   }
 }
