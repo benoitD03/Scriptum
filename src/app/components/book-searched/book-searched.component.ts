@@ -38,9 +38,17 @@ export class BookSearchedComponent {
       description: this.book.volumeInfo.description,
       finished: false
     };
-    await this.supabaseService.createBook(newBook);
-    this.displayToast = true;
-    this.closeModal();
+    this.supabaseService.createBook(newBook).subscribe(
+      {
+        next: () => {
+          this.displayToast = true;
+          this.closeModal();
+        },
+        error: (error) => {
+          console.error('Erreur lors de la création du livre:', error.message);
+        }
+      }
+    )
   }
 
   /**

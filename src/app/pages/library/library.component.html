@@ -1,1 +1,14 @@
-<p>library works!</p>
+<div *ngIf="books.length > 0; else noBooks" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+  <div *ngFor="let book of books">
+    <img class="h-auto max-w-full rounded-lg" [src]="book.image" alt="">
+    <h3>{{book.title}}</h3>
+  </div>
+</div>
+
+<div *ngIf="errorMessage">
+  <p style="color: red;">{{ errorMessage }}</p>
+</div>
+<ng-template #noBooks>
+  <p>Aucun livre trouvé pour cet utilisateur.</p>
+</ng-template>
+
