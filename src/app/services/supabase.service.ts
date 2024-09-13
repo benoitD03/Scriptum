@@ -115,4 +115,8 @@ export class SupabaseService {
       })
     );
   }
+
+  searchBooksByTitle(searchTerm: any) {
+
+  }
 }
