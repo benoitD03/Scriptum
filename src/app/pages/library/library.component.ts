@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {SupabaseService} from "../../services/supabase.service";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf, NgStyle} from "@angular/common";
 
 @Component({
   selector: 'app-library',
   standalone: true,
   imports: [
     NgIf,
-    NgForOf
+    NgForOf,
+    NgStyle
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.css'
@@ -15,6 +16,7 @@ import {NgForOf, NgIf} from "@angular/common";
 export class LibraryComponent implements OnInit {
   books: any[] = [];
   errorMessage: string | null = null;
+  searchTerm: any;
 
 
   constructor(private supabaseService: SupabaseService) { }

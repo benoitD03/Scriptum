@@ -1,1 +1,7 @@
-<p>dashboard works!</p>
+<div class="flex items-center -space-x-4">
+  <img *ngFor="let book of books"
+       alt="user 1"
+       [src]="book.image"
+       class="relative inline-block h-auto w-12 border-2 border-white object-cover object-center hover:z-10 focus:z-10"
+  />
+</div>
