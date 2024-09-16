@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SupabaseService} from "../../services/supabase.service";
 import {NgForOf, NgIf, NgStyle} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-library',
@@ -8,7 +9,8 @@ import {NgForOf, NgIf, NgStyle} from "@angular/common";
   imports: [
     NgIf,
     NgForOf,
-    NgStyle
+    NgStyle,
+    FormsModule
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.css'
@@ -23,9 +25,15 @@ export class LibraryComponent implements OnInit {
 
   ngOnInit(): void {
     //Récupération des livres de l'utilisateur connecté
+    this.getAllUserBooks()
+  }
+
+  /**
+   * Méthode pour récupérer tous les livres de l'utilisateur connecté
+   */
+  getAllUserBooks() {
     this.supabaseService.getCurrentUser().subscribe(user => {
       const userId = user?.data.user?.id;
-
       if (userId) {
         this.supabaseService.getUserBooks(userId).subscribe(
           {
@@ -43,6 +51,18 @@ export class LibraryComponent implements OnInit {
         this.errorMessage = 'Utilisateur non connecté';
       }
     });
+  }
+
+  searchBooksByTitle(searchTerm: any) {
+    if (!searchTerm) {
+      // Si le champ de recherche est vide, on réinitialise la liste des livres
+      this.getAllUserBooks()
+    } else {
+      // Si le champ de recherche n'est pas vu, on filtre
+      this.books = this.books.filter(book =>
+        book.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
   }
 }
 

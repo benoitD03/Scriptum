@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import {environment} from "../../environments/environment";
 import {Book} from "../class/book";
-import {data} from "autoprefixer";
 import {catchError, from, map, Observable, of, switchMap, throwError} from "rxjs";
 
 @Injectable({
@@ -116,7 +115,21 @@ export class SupabaseService {
     );
   }
 
-  searchBooksByTitle(searchTerm: any) {
+  /**
+   * Méthode qui permet de rechercher des livres selon une recherche.
+   * Désactivée, pour le moment j'utilise un filter dans le composant Library.
+   */
 
-  }
+  // searchBooksByTitle(searchTerm: any) {
+  //   return from(this.supabase
+  //     .from('books')
+  //     .select('*')
+  //     .ilike('title', `%${searchTerm.toLowerCase()}%`)).pipe(
+  //     map(response => response.data || []),
+  //     catchError(error => {
+  //       console.error('Erreur lors de la récupération des livres:', error.message);
+  //       return throwError(() => new Error('Erreur lors de la récupération des livres'));
+  //     })
+  //   );
+  // }
 }

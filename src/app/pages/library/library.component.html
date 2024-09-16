@@ -1,4 +1,11 @@
-<div *ngIf="books.length > 0; else noBooks" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<div class="mt-3 flex justify-center">
+  <input type="text" [(ngModel)]="searchTerm"
+         class="p-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+         focus:border-blue-500 block w-11/12 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400
+         dark:text-white" placeholder="Rechercher un livre" [(ngModel)]="searchTerm" (keyup)="searchBooksByTitle(searchTerm)" />
+</div>
+
+<div *ngIf="books.length > 0; else noBooks" class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-5">
   <div *ngFor="let book of books" class="flex justify-center">
     <div class='h-[230px] w-40 relative
        bg-gray-700 rounded-md
