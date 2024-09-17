@@ -12,7 +12,7 @@ export class GoogleBooksApiService {
 
   // Méthode pour rechercher des livres selon un titre
   searchBooksByTitle(query: string): Observable<any> {
-    const url = `${environment.googleBooksApiUrl}/volumes?q=${query}&key=${environment.googleBooksApiKey}`;
+    const url = `${environment.googleBooksApiUrl}/volumes?q=${query}&orderBy=relevance&key=${environment.googleBooksApiKey}`;
     return this.http.get<any>(url);
   }
 }
