@@ -4,4 +4,5 @@ export class Book {
   image: string = "";
   description: string = "";
   finished?: boolean;
+  category: string = "";
 }

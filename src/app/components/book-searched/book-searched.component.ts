@@ -36,7 +36,8 @@ export class BookSearchedComponent {
       author: this.book.volumeInfo.authors[0],
       image: this.book.volumeInfo.imageLinks.thumbnail,
       description: this.book.volumeInfo.description,
-      finished: false
+      finished: false,
+      category: this.book.volumeInfo.categories[0]
     };
     this.supabaseService.createBook(newBook).subscribe(
       {
