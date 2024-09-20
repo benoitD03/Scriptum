@@ -1,17 +1,34 @@
-<h1>Vous avez {{ totalBooks }} livres dans votre bibliothèque.</h1>
+<div class="p-4" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+  <dl class="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-6 dark:text-white sm:p-8">
+    <div class="flex flex-col items-center justify-center">
+      <dt class="mb-2 text-3xl font-extrabold text-gray-900">{{ totalBooks }}</dt>
+      <dd class="text-gray-500 dark:text-gray-400">Livres possédés</dd>
+    </div>
+    <div class="flex flex-col items-center justify-center">
+      <dt class="mb-2 text-3xl font-extrabold text-gray-900">{{ totalfinishedBooks }}</dt>
+      <dd class="text-gray-500 dark:text-gray-400">Livres terminés</dd>
+    </div>
+  </dl>
+</div>
 
-<div class="flex items-center -space-x-4">
+<div class="flex justify-center items-center -space-x-4">
   <img *ngFor="let book of books"
        alt="user 1"
        [src]="book.image"
-       class="relative inline-block h-auto w-12 border-2 border-white object-cover object-center hover:z-10 focus:z-10"
+       class="relative inline-block h-auto w-14 border-2 border-white object-cover object-center hover:z-10 focus:z-10"
   />
 </div>
 
-<div class="flex items-center -space-x-4">
-  <img *ngFor="let book of suggestedBooks"
-       alt="user 1"
-       [src]="book.volumeInfo.imageLinks.thumbnail"
-       class="relative inline-block h-auto w-16 border-2 border-white object-cover object-center hover:z-10 focus:z-10"
-  />
+<h2 class="font-extrabold ml-2 mt-4">Suggestions pour vous</h2>
+<div class="items-center justify-center grid grid-cols-2 md:grid-cols-3">
+  <div *ngFor="let book of suggestedBooks"
+       class="shadow-md w-11/12 mx-auto flex flex-col justify-center items-center my-4 rounded-md">
+    <img [src]="book.volumeInfo.imageLinks.thumbnail" class="w-32 h-48 my-3"
+         alt="">
+    <button
+      class="text-gray-700 background-transparent font-bold px-8 py-3 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+       Voir plus <i class="fas fa-arrow-alt-circle-right"></i>
+    </button>
+  </div>
 </div>
+

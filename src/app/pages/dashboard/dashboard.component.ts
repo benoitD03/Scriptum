@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   lastBooksCategories: any[] = [];
   suggestedBooks: any[] = [];
   totalBooks: number = 0;
+  totalfinishedBooks: number = 0;
   errorMessage: string | null = null;
   constructor(private supabaseService: SupabaseService, private googleBooksApiService : GoogleBooksApiService) { }
 
@@ -30,7 +31,8 @@ export class DashboardComponent implements OnInit {
           {
             next: (books) => {
               this.books = books;
-              this.totalBooks = this.books.length;
+              this.totalBooks = this.books.length; //Totalité des livres
+              this.totalfinishedBooks = this.books.filter(book => book.finished).length; // Totalité des livres terminés
               this.lastBooksCategories = this.books.slice(-5).map(book => book.category); //On récupère les catégories des 5 derniers livres ajoutés
               const randomIndex = Math.floor(Math.random() * this.lastBooksCategories.length);
               const randomCategory = this.lastBooksCategories[randomIndex]; //On choisit une catégorie aléatoirement pour la recherche suivante
