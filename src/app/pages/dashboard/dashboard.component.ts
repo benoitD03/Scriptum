@@ -2,12 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {SupabaseService} from "../../services/supabase.service";
 import {NgForOf} from "@angular/common";
 import {GoogleBooksApiService} from "../../services/google-books-api.service";
+import {BookSearchedComponent} from "../../components/book-searched/book-searched.component";
+import {Book} from "../../class/book";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    NgForOf
+    NgForOf,
+    BookSearchedComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -16,6 +19,7 @@ export class DashboardComponent implements OnInit {
   books: any[] = [];
   lastBooksCategories: any[] = [];
   suggestedBooks: any[] = [];
+  selectedSuggestedBook = null;
   totalBooks: number = 0;
   totalfinishedBooks: number = 0;
   errorMessage: string | null = null;
@@ -70,4 +74,20 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  /**
+   * Méthode qui se déclenche lorsque l'utilisateur sélectionne un livre suggéré.
+   * On a une modale qui s'ounvre uniquement quand selectedSuggestedBook est défini
+   */
+  selectBook(book: any) {
+    this.selectedSuggestedBook = book;
+  }
+
+  /**
+   * Méthode qui se déclenche lorsque l'utilisateur ajoute un livre à sa bibliothèque
+   * @param newBook
+   */
+  onBookCreated(newBook: Book) {
+    this.books.push(newBook);
+    this.totalBooks = this.books.length;
+  }
 }

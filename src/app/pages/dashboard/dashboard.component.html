@@ -25,10 +25,12 @@
        class="shadow-md w-11/12 mx-auto flex flex-col justify-center items-center my-4 rounded-md">
     <img [src]="book.volumeInfo.imageLinks.thumbnail" class="w-32 h-48 my-3"
          alt="">
-    <button
+    <button (click)="selectBook(book)"
       class="text-gray-700 background-transparent font-bold px-8 py-3 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
        Voir plus <i class="fas fa-arrow-alt-circle-right"></i>
     </button>
   </div>
 </div>
+
+<app-book-searched [book]="selectedSuggestedBook" (bookCreated)="onBookCreated($event)"></app-book-searched>
 

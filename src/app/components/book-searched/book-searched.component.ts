@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgIf} from "@angular/common";
 import {Book} from "../../class/book";
 import {SupabaseService} from "../../services/supabase.service";
@@ -14,6 +14,7 @@ import {SupabaseService} from "../../services/supabase.service";
 })
 export class BookSearchedComponent {
   @Input() book: any;
+  @Output() bookCreated = new EventEmitter<Book>();
   displayToast: boolean = false;
 
   constructor(private supabaseService: SupabaseService) {
@@ -43,6 +44,7 @@ export class BookSearchedComponent {
       {
         next: () => {
           this.displayToast = true;
+          this.bookCreated.emit(newBook); // On émet un événement pour informer le parent qu'un livre a été ajouté
           this.closeModal();
         },
         error: (error) => {
