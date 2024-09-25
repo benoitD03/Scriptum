@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {LoginComponent} from "./pages/login/login.component";
-import {NgIf} from "@angular/common";
+import {DatePipe, NgIf} from "@angular/common";
 import {SupabaseService} from "./services/supabase.service";
 
 @Component({

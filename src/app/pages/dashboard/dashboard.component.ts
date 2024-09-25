@@ -1,16 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {SupabaseService} from "../../services/supabase.service";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {GoogleBooksApiService} from "../../services/google-books-api.service";
 import {BookSearchedComponent} from "../../components/book-searched/book-searched.component";
 import {Book} from "../../class/book";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
     NgForOf,
-    BookSearchedComponent
+    BookSearchedComponent,
+    NgIf
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -23,7 +25,7 @@ export class DashboardComponent implements OnInit {
   totalBooks: number = 0;
   totalfinishedBooks: number = 0;
   errorMessage: string | null = null;
-  constructor(private supabaseService: SupabaseService, private googleBooksApiService : GoogleBooksApiService) { }
+  constructor(private supabaseService: SupabaseService, private googleBooksApiService : GoogleBooksApiService, private router: Router) { }
 
   ngOnInit(): void {
     //Récupération des livres de l'utilisateur connecté
@@ -35,8 +37,8 @@ export class DashboardComponent implements OnInit {
           {
             next: (books) => {
               this.books = books;
-              this.totalBooks = this.books.length; //Totalité des livres
-              this.totalfinishedBooks = this.books.filter(book => book.finished).length; // Totalité des livres terminés
+              this.totalBooks = this.books.length;
+              this.totalfinishedBooks = this.books.filter(book => book.finished).length;
               this.lastBooksCategories = this.books.slice(-5).map(book => book.category); //On récupère les catégories des 5 derniers livres ajoutés
               const randomIndex = Math.floor(Math.random() * this.lastBooksCategories.length);
               const randomCategory = this.lastBooksCategories[randomIndex]; //On choisit une catégorie aléatoirement pour la recherche suivante
@@ -89,5 +91,9 @@ export class DashboardComponent implements OnInit {
   onBookCreated(newBook: Book) {
     this.books.push(newBook);
     this.totalBooks = this.books.length;
+  }
+
+  viewBook(book: any) {
+    this.router.navigate(['/book', book.id]);
   }
 }

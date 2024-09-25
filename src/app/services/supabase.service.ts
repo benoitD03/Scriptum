@@ -132,4 +132,19 @@ export class SupabaseService {
   //     })
   //   );
   // }
+
+  getBookById(bookId: number): Observable<Book> {
+    return from(this.supabase
+      .from('books')
+      .select('*')
+      .eq('id', bookId)
+      .single())
+      .pipe(
+      map(response => response.data || {}),
+      catchError(error => {
+        console.error('Erreur lors de la récupération du livre:', error.message);
+        return throwError(() => new Error('Erreur lors de la récupération du livre'));
+      })
+    );
+  }
 }
