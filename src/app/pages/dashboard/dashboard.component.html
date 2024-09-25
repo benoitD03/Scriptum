@@ -11,24 +11,27 @@
   </dl>
 </div>
 
-<div class="flex justify-center items-center -space-x-4">
-  <img *ngFor="let book of books"
-       alt="user 1"
-       [src]="book.image"
-       class="relative inline-block h-auto w-14 border-2 border-white object-cover object-center hover:z-10 focus:z-10"
-  />
+<div class="flex justify-center items-center -space-x-4 mr-3">
+  <div *ngFor="let book of books; let i = index">
+    <img *ngIf="i < 9"
+         alt="user 1"
+         [src]="book.image"
+         class="relative inline-block h-auto w-14 border-2 border-white object-cover object-center hover:z-10 focus:z-10"
+         (click)="viewBook(book)"
+    />
+    </div>
 </div>
 
 <h2 class="font-extrabold ml-2 mt-4">Suggestions pour vous</h2>
 <div class="items-center justify-center grid grid-cols-2 md:grid-cols-3">
   <div *ngFor="let book of suggestedBooks"
        class="shadow-md w-11/12 mx-auto flex flex-col justify-center items-center my-4 rounded-md">
-    <img [src]="book.volumeInfo.imageLinks.thumbnail" class="w-32 h-48 my-3"
-         alt="">
-    <button (click)="selectBook(book)"
-      class="text-gray-700 background-transparent font-bold px-8 py-3 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
-       Voir plus <i class="fas fa-arrow-alt-circle-right"></i>
-    </button>
+      <img [src]="book.volumeInfo.imageLinks.thumbnail" class="w-32 h-48 my-3"
+           alt="">
+      <button (click)="selectBook(book)"
+        class="text-gray-700 background-transparent font-bold px-8 py-3 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+         Voir plus <i class="fas fa-arrow-alt-circle-right"></i>
+      </button>
   </div>
 </div>
 
