@@ -93,6 +93,10 @@ export class DashboardComponent implements OnInit {
     this.totalBooks = this.books.length;
   }
 
+  /**
+   * Méthode pour voir le détail d'un livre
+   * @param book
+   */
   viewBook(book: any) {
     this.router.navigate(['/book', book.id]);
   }

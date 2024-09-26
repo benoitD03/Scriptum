@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SupabaseService} from "../../services/supabase.service";
 import {NgForOf, NgIf, NgStyle} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-library',
@@ -21,7 +22,7 @@ export class LibraryComponent implements OnInit {
   searchTerm: any;
 
 
-  constructor(private supabaseService: SupabaseService) { }
+  constructor(private router: Router, private supabaseService: SupabaseService) { }
 
   ngOnInit(): void {
     //Récupération des livres de l'utilisateur connecté
@@ -63,6 +64,17 @@ export class LibraryComponent implements OnInit {
         book.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
+  }
+
+  /**
+   * Méthode pour voir le détail d'un livre
+   * @param book
+   */
+  viewBook(book: any) {
+    //Le délai sert juste a laisser le temps à l'animation de se terminer
+    setTimeout(() => {
+      this.router.navigate(['/book', book.id]);
+    },200);
   }
 }
 
