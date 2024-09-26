@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {SupabaseService} from "../../services/supabase.service";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormattingService} from "../../services/formatting.service";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-book-detail',
@@ -17,7 +18,8 @@ import {FormattingService} from "../../services/formatting.service";
 export class BookDetailComponent implements OnInit {
 
   book: any;
-  constructor(private route: ActivatedRoute, private supabaseService: SupabaseService, private formattingService: FormattingService) {}
+  constructor(private route: ActivatedRoute, private supabaseService: SupabaseService,
+              private formattingService: FormattingService, private location : Location) {}
 
   ngOnInit() {
     const bookId: number = Number(this.route.snapshot.paramMap.get('id'));
@@ -32,8 +34,16 @@ export class BookDetailComponent implements OnInit {
     });
   }
 
+  /**
+   * Méthode pour formater la date au format dd/MM/yyyy
+   * @param timestamp
+   */
   getFormattedDate(timestamp: string): string {
     return this.formattingService.formatToFrenchDate(timestamp);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }
