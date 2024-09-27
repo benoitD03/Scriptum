@@ -3,6 +3,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import {environment} from "../../environments/environment";
 import {Book} from "../class/book";
 import {catchError, from, map, Observable, of, switchMap, throwError} from "rxjs";
+import {Note} from "../class/note";
 
 @Injectable({
   providedIn: 'root',
@@ -133,6 +134,10 @@ export class SupabaseService {
   //   );
   // }
 
+  /**
+   * Méthode pour récipérer un livre par son id
+   * @param bookId
+   */
   getBookById(bookId: number): Observable<Book> {
     return from(this.supabase
       .from('books')
@@ -144,6 +149,21 @@ export class SupabaseService {
       catchError(error => {
         console.error('Erreur lors de la récupération du livre:', error.message);
         return throwError(() => new Error('Erreur lors de la récupération du livre'));
+      })
+    );
+  }
+
+  createNote(note: Note, book_id:number): Observable<any> {
+    const newNote = {
+      ...note,
+      id_book: book_id
+    };
+    return from(this.supabase
+      .from('notes')
+      .insert([newNote])).pipe(
+      catchError(error => {
+        console.error('Erreur lors de la création de la note:', error.message);
+        return throwError(() => new Error('Erreur lors de la création de la note'));
       })
     );
   }
