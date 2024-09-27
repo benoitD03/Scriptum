@@ -1,0 +1,28 @@
+<button type="button" (click)="goBack()"
+        class="px-5 mt-3 ml-3 text-white bg-gray-800 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium
+        rounded-lg p-2.5 text-center inline-flex items-center">
+  <i class="fas fa- fa-chevron-circle-left"></i>
+</button>
+
+<form action="">
+  <div class="mx-auto flex justify-center items-center my-3">
+    <input name="titre" id="titre"
+           class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
+           block w-11/12 p-2.5  dark:border-gray-500 dark:placeholder-gray-400"
+           placeholder="Chapitre / Titre" required />
+  </div>
+  <div class="mx-auto flex justify-center items-center my-3">
+    <textarea  name="note" id="note"
+           class="h-48 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
+           block w-11/12 p-2.5  dark:border-gray-500 dark:placeholder-gray-400"
+           placeholder="Note ..." required></textarea>
+  </div>
+
+  <div class="flex justify-center my-2">
+    <button type="button" class="w-11/12 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100
+    focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white
+    dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+    >Ajouter une note</button>
+  </div>
+</form>
+
