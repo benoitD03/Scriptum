@@ -156,7 +156,7 @@ export class SupabaseService {
   createNote(note: Note, book_id:number): Observable<any> {
     const newNote = {
       ...note,
-      id_book: book_id
+      book_id: book_id
     };
     return from(this.supabase
       .from('notes')
