@@ -153,6 +153,11 @@ export class SupabaseService {
     );
   }
 
+  /**
+   * Méthode pour Créer une note
+   * @param note
+   * @param book_id
+   */
   createNote(note: Note, book_id:number): Observable<any> {
     const newNote = {
       ...note,
@@ -164,6 +169,19 @@ export class SupabaseService {
       catchError(error => {
         console.error('Erreur lors de la création de la note:', error.message);
         return throwError(() => new Error('Erreur lors de la création de la note'));
+      })
+    );
+  }
+
+  getNotesByBookId(bookId: number): Observable<any[]> {
+    return from(this.supabase
+      .from('notes')
+      .select('*')
+      .eq('book_id', bookId)).pipe(
+      map(response => response.data || []),
+      catchError(error => {
+        console.error('Erreur lors de la récupération des notes:', error.message);
+        return throwError(() => new Error('Erreur lors de la récupération des notes'));
       })
     );
   }
