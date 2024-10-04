@@ -21,7 +21,7 @@ export class SupabaseService {
    */
 
   async signInWithEmail(email: string, password: string) {
-    const { data, error } = await this.supabase.auth.signInWithPassword({ email, password });
+    const {data, error} = await this.supabase.auth.signInWithPassword({email, password});
     if (error) throw error;
     return data.user;
   }
@@ -30,7 +30,7 @@ export class SupabaseService {
    * Méthode pour se connecter avec Google
    */
   async signInWithGoogle() {
-    const { data, error } = await this.supabase.auth.signInWithOAuth({
+    const {data, error} = await this.supabase.auth.signInWithOAuth({
       provider: 'google',
     });
     if (error) throw error;
@@ -43,7 +43,7 @@ export class SupabaseService {
    * @param password
    */
   async signUp(email: string, password: string) {
-    const { data, error } = await this.supabase.auth.signUp({ email, password });
+    const {data, error} = await this.supabase.auth.signUp({email, password});
     if (error) throw error;
     return data;
   }
@@ -52,7 +52,7 @@ export class SupabaseService {
    * Méthode pour se déconnecter
    */
   async signOut() {
-    const { error } = await this.supabase.auth.signOut();
+    const {error} = await this.supabase.auth.signOut();
     if (error) throw error;
   }
 
@@ -145,12 +145,12 @@ export class SupabaseService {
       .eq('id', bookId)
       .single())
       .pipe(
-      map(response => response.data || {}),
-      catchError(error => {
-        console.error('Erreur lors de la récupération du livre:', error.message);
-        return throwError(() => new Error('Erreur lors de la récupération du livre'));
-      })
-    );
+        map(response => response.data || {}),
+        catchError(error => {
+          console.error('Erreur lors de la récupération du livre:', error.message);
+          return throwError(() => new Error('Erreur lors de la récupération du livre'));
+        })
+      );
   }
 
   /**
@@ -158,7 +158,7 @@ export class SupabaseService {
    * @param note
    * @param book_id
    */
-  createNote(note: Note, book_id:number): Observable<any> {
+  createNote(note: Note, book_id: number): Observable<any> {
     const newNote = {
       ...note,
       book_id: book_id
@@ -173,6 +173,10 @@ export class SupabaseService {
     );
   }
 
+  /**
+   * Méthode pour récupérer les notes d'un livre
+   * @param bookId
+   */
   getNotesByBookId(bookId: number): Observable<any[]> {
     return from(this.supabase
       .from('notes')
@@ -182,6 +186,22 @@ export class SupabaseService {
       catchError(error => {
         console.error('Erreur lors de la récupération des notes:', error.message);
         return throwError(() => new Error('Erreur lors de la récupération des notes'));
+      })
+    );
+  }
+
+  /**
+   * Méthode pour supprimer une note
+   * @param noteId
+   */
+  deleteNoteById(noteId: number | undefined): Observable<any> {
+    return from(this.supabase
+      .from('notes')
+      .delete()
+      .eq('id', noteId)).pipe(
+      catchError(error => {
+        console.error('Erreur lors de la suppression de la note:', error.message);
+        return throwError(() => new Error('Erreur lors de la suppression de la note'));
       })
     );
   }
