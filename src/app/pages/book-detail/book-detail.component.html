@@ -30,6 +30,18 @@
           <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
         </svg>
         <div class="ml-6">
+          <div class="flex justify-between">
+            <button type="button"
+                    class="p-2 text-gray-800 border-gray-100 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium
+          rounded-lg p-2.5 text-center inline-flex items-center">
+              <i class="fas fa-sm fa-edit"></i>
+            </button>
+            <button type="button"
+                    class="p-2 text-white bg-gray-800 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium
+          rounded-lg p-2.5 text-center inline-flex items-center" (click)="deleteNoteById(note.id)">
+              <i class="fas fa-sm fa-trash-alt"></i>
+            </button>
+          </div>
           <h4 class="font-bold text-gray-800">{{note.chapter}}</h4>
           <div
             class="mt-2 max-w-sm text-sm text-gray-500 overflow-hidden text-ellipsis whitespace-pre-line line-clamp-5">{{note.text}}</div>

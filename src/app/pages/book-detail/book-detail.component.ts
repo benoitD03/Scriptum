@@ -7,6 +7,7 @@ import {Location} from "@angular/common";
 import {NoteFormComponent} from "../note-form/note-form.component";
 import {Book} from "../../class/book";
 import {Note} from "../../class/note";
+import {switchMap} from "rxjs";
 
 @Component({
   selector: 'app-book-detail',
@@ -65,6 +66,23 @@ export class BookDetailComponent implements OnInit {
 
   goToNoteForm(book_id: number): void {
       this.router.navigate(['/note/add', book_id]);
+  }
+
+  deleteNoteById(noteId: number | undefined): void {
+    this.supabaseService.deleteNoteById(noteId).pipe(
+      switchMap(() => {
+        console.log('Note supprimée');
+        return this.supabaseService.getNotesByBookId(this.book.id);
+      })
+    ).subscribe({
+      next: (notes) => {
+        console.log('Notes récupérées:', notes);
+        this.notes = notes;
+      },
+      error: (error) => {
+        console.error('Erreur lors de la suppression ou de la récupération des notes:', error.message);
+      }
+    });
   }
 
 }
