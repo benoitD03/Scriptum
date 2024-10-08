@@ -8,6 +8,7 @@ import {NoteFormComponent} from "../note-form/note-form.component";
 import {Book} from "../../class/book";
 import {Note} from "../../class/note";
 import {switchMap} from "rxjs";
+import {ConfirmationModalComponent} from "../../components/confirmation-modal/confirmation-modal.component";
 
 @Component({
   selector: 'app-book-detail',
@@ -15,7 +16,8 @@ import {switchMap} from "rxjs";
   imports: [
     NgIf,
     NgForOf,
-    NoteFormComponent
+    NoteFormComponent,
+    ConfirmationModalComponent
   ],
   templateUrl: './book-detail.component.html',
   styleUrls: ['./book-detail.component.css']
@@ -24,6 +26,8 @@ export class BookDetailComponent implements OnInit {
 
   book: any;
   notes: Note[] = [];
+  showModal: boolean = false;
+  noteToDelete: number | undefined = 0 ;
   constructor(private route: ActivatedRoute, private supabaseService: SupabaseService,
               private formattingService: FormattingService, private location : Location,
               private router: Router) {}
@@ -85,4 +89,25 @@ export class BookDetailComponent implements OnInit {
     });
   }
 
+  openModal(noteId: number| undefined) {
+    this.noteToDelete = noteId;
+    this.showModal = true;
+  }
+
+  /**
+   * Méthode qui se déclenche lors de la confirmation de la suppression d'une note
+   * @param noteId
+   */
+  modalConfirmation(noteId: number | undefined) {
+    if(this.noteToDelete !== 0) {
+      this.deleteNoteById(noteId);
+    }
+    this.showModal = false;
+    this.noteToDelete = 0;
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.noteToDelete = 0;
+  }
 }

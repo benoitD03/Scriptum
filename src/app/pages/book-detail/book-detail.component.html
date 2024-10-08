@@ -38,7 +38,7 @@
             </button>
             <button type="button"
                     class="p-2 text-white bg-gray-800 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium
-          rounded-lg p-2.5 text-center inline-flex items-center" (click)="deleteNoteById(note.id)">
+          rounded-lg p-2.5 text-center inline-flex items-center" (click)="openModal(note.id)">
               <i class="fas fa-sm fa-trash-alt"></i>
             </button>
           </div>
@@ -52,3 +52,9 @@
   </div>
 
 </div>
+<app-confirmation-modal
+  *ngIf="showModal"
+  message="Voulez-vous vraiment supprimer cette note ?"
+  (confirmed)="modalConfirmation(noteToDelete)"
+  (closed)="closeModal()"
+></app-confirmation-modal>
