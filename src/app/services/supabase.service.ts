@@ -205,4 +205,16 @@ export class SupabaseService {
       })
     );
   }
+
+  updateNoteById(noteId: number | undefined, note: Note): Observable<any> {
+    return from(this.supabase
+      .from('notes')
+      .update(note)
+      .eq('id', noteId)).pipe(
+      catchError(error => {
+        console.error('Erreur lors de la mise à jour de la note:', error.message);
+        return throwError(() => new Error('Erreur lors de la mise à jour de la note'));
+      })
+    );
+  }
 }

@@ -37,7 +37,7 @@ export class BookDetailComponent implements OnInit {
     // Récupération du livre
     this.supabaseService.getBookById(bookId).subscribe({
       next: (book) => {
-        console.log('Livre récupéré:', book);
+        // console.log('Livre récupéré:', book);
         this.book = book;
       },
       error: (error) => {
@@ -47,7 +47,7 @@ export class BookDetailComponent implements OnInit {
     // Récupération des notes
     this.supabaseService.getNotesByBookId(bookId).subscribe({
       next: (notes) => {
-        console.log('Notes récupérées:', notes);
+        // console.log('Notes récupérées:', notes);
         this.notes = notes;
       },
       error: (error) => {
@@ -80,7 +80,7 @@ export class BookDetailComponent implements OnInit {
       })
     ).subscribe({
       next: (notes) => {
-        console.log('Notes récupérées:', notes);
+        // console.log('Notes récupérées:', notes);
         this.notes = notes;
       },
       error: (error) => {
@@ -109,5 +109,9 @@ export class BookDetailComponent implements OnInit {
   closeModal() {
     this.showModal = false;
     this.noteToDelete = 0;
+  }
+
+  goToNoteFormWithNoteData(note: Note, book_id: number): void {
+    this.router.navigate(['/note/add', book_id], { state: { note } });
   }
 }
