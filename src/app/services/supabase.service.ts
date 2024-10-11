@@ -153,6 +153,18 @@ export class SupabaseService {
       );
   }
 
+  deleteBookById(bookId: number | undefined): Observable<any> {
+    return from(this.supabase
+      .from('books')
+      .delete()
+      .eq('id', bookId)).pipe(
+      catchError(error => {
+        console.error('Erreur lors de la suppression du livre:', error.message);
+        return throwError(() => new Error('Erreur lors de la suppression du livre'));
+      })
+    );
+  }
+
   /**
    * Méthode pour Créer une note
    * @param note
