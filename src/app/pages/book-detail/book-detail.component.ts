@@ -28,6 +28,7 @@ export class BookDetailComponent implements OnInit {
   notes: Note[] = [];
   showModal: boolean = false;
   noteToDelete: number | undefined = 0 ;
+  itemToDelete: { id: number | undefined, type: 'note' | 'book' } | undefined = undefined;
   constructor(private route: ActivatedRoute, private supabaseService: SupabaseService,
               private formattingService: FormattingService, private location : Location,
               private router: Router) {}
@@ -37,7 +38,6 @@ export class BookDetailComponent implements OnInit {
     // Récupération du livre
     this.supabaseService.getBookById(bookId).subscribe({
       next: (book) => {
-        // console.log('Livre récupéré:', book);
         this.book = book;
       },
       error: (error) => {
@@ -47,7 +47,6 @@ export class BookDetailComponent implements OnInit {
     // Récupération des notes
     this.supabaseService.getNotesByBookId(bookId).subscribe({
       next: (notes) => {
-        // console.log('Notes récupérées:', notes);
         this.notes = notes;
       },
       error: (error) => {
@@ -75,12 +74,10 @@ export class BookDetailComponent implements OnInit {
   deleteNoteById(noteId: number | undefined): void {
     this.supabaseService.deleteNoteById(noteId).pipe(
       switchMap(() => {
-        console.log('Note supprimée');
         return this.supabaseService.getNotesByBookId(this.book.id);
       })
     ).subscribe({
       next: (notes) => {
-        // console.log('Notes récupérées:', notes);
         this.notes = notes;
       },
       error: (error) => {
@@ -89,29 +86,41 @@ export class BookDetailComponent implements OnInit {
     });
   }
 
-  openModal(noteId: number| undefined) {
-    this.noteToDelete = noteId;
+  openDeleteModal(itemId: number | undefined, itemType: 'note' | 'book') {
+    this.itemToDelete = { id: itemId, type: itemType };
     this.showModal = true;
   }
 
-  /**
-   * Méthode qui se déclenche lors de la confirmation de la suppression d'une note
-   * @param noteId
-   */
-  modalConfirmation(noteId: number | undefined) {
-    if(this.noteToDelete !== 0) {
-      this.deleteNoteById(noteId);
+
+  modalConfirmation() {
+    if (this.itemToDelete && this.itemToDelete.id !== 0) {
+      if (this.itemToDelete.type === 'note') {
+        this.deleteNoteById(this.itemToDelete.id);
+      } else if (this.itemToDelete.type === 'book') {
+        this.deleteBook(this.itemToDelete.id);
+      }
     }
     this.showModal = false;
-    this.noteToDelete = 0;
+    this.itemToDelete = undefined;
   }
 
-  closeModal() {
+  closeDeleteModal() {
     this.showModal = false;
-    this.noteToDelete = 0;
+    this.itemToDelete = undefined;
   }
 
   goToNoteFormWithNoteData(note: Note, book_id: number): void {
     this.router.navigate(['/note/add', book_id], { state: { note } });
+  }
+
+  deleteBook(bookId: number | undefined): void {
+    this.supabaseService.deleteBookById(bookId).subscribe({
+      next: () => {
+        this.goBack();
+      },
+      error: (error) => {
+        console.error('Erreur lors de la suppression du livre:', error.message);
+      }
+    });
   }
 }
