@@ -123,4 +123,8 @@ export class BookDetailComponent implements OnInit {
       }
     });
   }
+
+  viewNote(note: Note) {
+    this.router.navigate(['/note', note.id]);
+  }
 }

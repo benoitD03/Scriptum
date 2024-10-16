@@ -51,7 +51,7 @@
           <h4 class="font-bold text-gray-800">{{note.chapter}}</h4>
           <div
             class="mt-2 max-w-sm text-sm text-gray-500 overflow-hidden text-ellipsis whitespace-pre-line line-clamp-5">{{note.text}}</div>
-          <span class="mt-1 block text-sm font-semibold text-gray-800">Voir plus</span>
+          <span class="mt-1 block text-sm font-semibold text-gray-800" (click)="viewNote(note)">Voir plus</span>
         </div>
       </div>
     </div>

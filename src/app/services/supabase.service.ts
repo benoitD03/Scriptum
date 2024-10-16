@@ -202,6 +202,21 @@ export class SupabaseService {
     );
   }
 
+  getNoteById(noteId: number): Observable<Note> {
+    return from(this.supabase
+      .from('notes')
+      .select('*')
+      .eq('id', noteId)
+      .single())
+      .pipe(
+        map(response => response.data || {}),
+        catchError(error => {
+          console.error('Erreur lors de la récupération de la note:', error.message);
+          return throwError(() => new Error('Erreur lors de la récupération de la note'));
+        })
+      );
+  }
+
   /**
    * Méthode pour supprimer une note
    * @param noteId
