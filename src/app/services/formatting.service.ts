@@ -17,4 +17,12 @@ export class FormattingService {
     const datePipe = new DatePipe('en-US');
     return datePipe.transform(timestamp, 'dd/MM/yyyy') ?? '';
   }
+
+  /**
+   * Méthode pour convertir les nouvelles lignes en balises <br>
+   * @param value
+   */
+  newlineToBr(value: string): string {
+    return value.replace(/\n/g, '<br>');
+  }
 }
